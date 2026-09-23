@@ -1,4 +1,4 @@
-# 🚗 Real-Time Lane & Vehicle Perception System for ADAS Applications
+#  Real-Time Lane & Vehicle Perception System for ADAS Applications
 
 An end-to-end **Advanced Driver Assistance System (ADAS)** perception pipeline that performs lane detection, vehicle detection, multi-object tracking, distance/speed estimation, and forward collision warning (FCW) in real time using dashcam or traffic camera video streams.
 
@@ -19,7 +19,7 @@ Output Video
 
 ---
 
-## 📌 Key Features
+##  Key Features
 
 | Feature | Description |
 |---------|-------------|
