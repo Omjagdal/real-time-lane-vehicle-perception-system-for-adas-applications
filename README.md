@@ -36,7 +36,7 @@ Output Video
 
 ---
 
-## 🧠 System Architecture
+##  System Architecture
 
 ```
                         ┌─────────────────────────┐
@@ -82,7 +82,7 @@ Output Video
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
