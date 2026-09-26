@@ -23,16 +23,16 @@ Output Video
 
 | Feature | Description |
 |---------|-------------|
-| 🎥 **Real-Time Video Processing** | Upload dashcam/traffic videos and process frame-by-frame with live preview |
-| 🛣️ **Lane Detection** | Canny edge detection + Hough Line Transform with temporal smoothing |
-| 🚘 **Vehicle Detection** | YOLOv11n (nano) — filters cars, motorcycles, buses, trucks |
-| 🆔 **Multi-Object Tracking** | IoU-based tracker with Hungarian algorithm assignment & ID persistence |
-| 📏 **Monocular Distance Estimation** | Pinhole camera model with perspective correction |
-| 🏎️ **Speed Estimation** | Frame-to-frame pixel displacement with EMA smoothing |
-| ⚠️ **Forward Collision Warning** | Time-To-Collision (TTC) based 3-tier alert system |
-| 🎨 **Rich Visualization** | Annotated overlays — lanes, bounding boxes, distance, speed & FCW banners |
-| 🖥️ **Modern Web UI** | React + Vite frontend with SSE streaming & real-time dashboard |
-| 📥 **Video Download** | Download fully annotated MP4 output after processing |
+|  **Real-Time Video Processing** | Upload dashcam/traffic videos and process frame-by-frame with live preview |
+|  **Lane Detection** | Canny edge detection + Hough Line Transform with temporal smoothing |
+|  **Vehicle Detection** | YOLOv11n (nano) — filters cars, motorcycles, buses, trucks |
+|  **Multi-Object Tracking** | IoU-based tracker with Hungarian algorithm assignment & ID persistence |
+|  **Monocular Distance Estimation** | Pinhole camera model with perspective correction |
+|  **Speed Estimation** | Frame-to-frame pixel displacement with EMA smoothing |
+| **Forward Collision Warning** | Time-To-Collision (TTC) based 3-tier alert system |
+|  **Rich Visualization** | Annotated overlays — lanes, bounding boxes, distance, speed & FCW banners |
+|  **Modern Web UI** | React + Vite frontend with SSE streaming & real-time dashboard |
+|  **Video Download** | Download fully annotated MP4 output after processing |
 
 ---
 
@@ -126,7 +126,7 @@ Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 ### Prerequisites
 
@@ -134,14 +134,14 @@ Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
 - **Node.js 18+** and npm
 - **Git**
 
-### 1️⃣ Clone the Repository
+### 1️ Clone the Repository
 
 ```bash
 git clone https://github.com/OmJagdale/Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications.git
 cd Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications
 ```
 
-### 2️⃣ Backend Setup (Python)
+### 2️ Backend Setup (Python)
 
 ```bash
 # Create and activate virtual environment
@@ -154,7 +154,7 @@ pip install -r requirements.txt
 pip install fastapi uvicorn python-multipart
 ```
 
-### 3️⃣ Frontend Setup (Node.js)
+### 3️ Frontend Setup (Node.js)
 
 ```bash
 cd frontend
@@ -210,7 +210,7 @@ streamlit run app.py
 
 ---
 
-## 🧪 Technologies Used
+##  Technologies Used
 
 | Component | Technology | Version |
 |-----------|-----------|---------|
@@ -226,7 +226,7 @@ streamlit run app.py
 
 ---
 
-## 🎯 Algorithm Details
+##  Algorithm Details
 
 ### 1. Lane Detection (Traditional CV)
 
@@ -310,7 +310,7 @@ Closing_Speed = Ego_Speed - Vehicle_Speed  (only if > 0.5 m/s)
 
 ---
 
-## 📊 Performance & Accuracy Metrics
+##  Performance & Accuracy Metrics
 
 ### Vehicle Detection — YOLOv11n
 
@@ -359,7 +359,7 @@ Closing_Speed = Ego_Speed - Vehicle_Speed  (only if > 0.5 m/s)
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Web UI Settings (Adjustable via slider)
 
@@ -384,7 +384,7 @@ Closing_Speed = Ego_Speed - Vehicle_Speed  (only if > 0.5 m/s)
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### YOLO model not loading
 ```bash
@@ -416,17 +416,17 @@ lsof -ti:8000 | xargs kill -9
 
 ---
 
-## 🚀 Applications
+##  Applications
 
-- ✅ Advanced Driver Assistance Systems (ADAS)
-- ✅ Autonomous driving perception research
-- ✅ Traffic monitoring & analytics
-- ✅ Smart transportation systems
-- ✅ Driver safety research & education
-- ✅ Computer vision portfolio projects
+-  Advanced Driver Assistance Systems (ADAS)
+-  Autonomous driving perception research
+-  Traffic monitoring & analytics
+-  Smart transportation systems
+-  Driver safety research & education
+-  Computer vision portfolio projects
 
 
-## 📝 License
+##  License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
