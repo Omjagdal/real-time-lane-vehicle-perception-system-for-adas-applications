@@ -1,13 +1,15 @@
-#  Real-Time Lane & Vehicle Perception System for ADAS Applications
+# Real-Time Lane & Vehicle Perception System for ADAS Applications
 
 An end-to-end **Advanced Driver Assistance System (ADAS)** perception pipeline that performs lane detection, vehicle detection, multi-object tracking, distance/speed estimation, and forward collision warning (FCW) in real time using dashcam or traffic camera video streams.
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+![C++](https://img.shields.io/badge/C++-17-00599C.svg)
 ![React](https://img.shields.io/badge/React-18+-61DAFB.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.135+-009688.svg)
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-5C3EE8.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.1+-EE4C2C.svg)
 ![YOLOv11](https://img.shields.io/badge/YOLOv11n-Ultralytics-00FFFF.svg)
+![ONNX](https://img.shields.io/badge/ONNX-Model-005CED.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ---
@@ -19,24 +21,24 @@ Output Video
 
 ---
 
-##  Key Features
+## Key Features
 
 | Feature | Description |
 |---------|-------------|
-|  **Real-Time Video Processing** | Upload dashcam/traffic videos and process frame-by-frame with live preview |
-|  **Lane Detection** | Canny edge detection + Hough Line Transform with temporal smoothing |
-|  **Vehicle Detection** | YOLOv11n (nano) — filters cars, motorcycles, buses, trucks |
-|  **Multi-Object Tracking** | IoU-based tracker with Hungarian algorithm assignment & ID persistence |
-|  **Monocular Distance Estimation** | Pinhole camera model with perspective correction |
-|  **Speed Estimation** | Frame-to-frame pixel displacement with EMA smoothing |
+| **Real-Time Video Processing** | Upload dashcam/traffic videos and process frame-by-frame with live preview |
+| **Lane Detection** | Canny edge detection + Hough Line Transform with temporal smoothing |
+| **Vehicle Detection** | YOLOv11n (nano) — filters cars, motorcycles, buses, trucks |
+| **Multi-Object Tracking** | IoU-based tracker with Hungarian algorithm assignment & ID persistence |
+| **Monocular Distance Estimation** | Pinhole camera model with perspective correction |
+| **Speed Estimation** | Frame-to-frame pixel displacement with EMA smoothing |
 | **Forward Collision Warning** | Time-To-Collision (TTC) based 3-tier alert system |
-|  **Rich Visualization** | Annotated overlays — lanes, bounding boxes, distance, speed & FCW banners |
-|  **Modern Web UI** | React + Vite frontend with SSE streaming & real-time dashboard |
-|  **Video Download** | Download fully annotated MP4 output after processing |
+| **Rich Visualization** | Annotated overlays — lanes, bounding boxes, distance, speed & FCW banners |
+| **Modern Web UI** | React + Vite frontend with SSE streaming & real-time dashboard |
+| **Video Download** | Download fully annotated MP4 output after processing |
 
 ---
 
-##  System Architecture
+## System Architecture
 
 ```
                         ┌─────────────────────────┐
@@ -82,7 +84,7 @@ Output Video
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
@@ -113,9 +115,16 @@ Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
 │   ├── fcw.py                       # Forward Collision Warning engine
 │   └── visualization.py            # Drawing overlays, HUD, banners
 │
+├── cpp_backend/                     # High-Performance C++ Backend
+│   ├── src/                         # C++ implementations (Lane, Tracking, etc.)
+│   ├── include/                     # C++ header files
+│   ├── CMakeLists.txt               # Build configuration
+│   └── models/
+│       └── yolo11n.onnx             # YOLOv11 ONNX weights for OpenCV DNN
+│
 ├── models/
 │   └── yolo/
-│       └── yolov11n.pt              # YOLOv11 Nano weights
+│       └── yolov11n.pt              # YOLOv11 Nano weights (Python)
 │
 ├── server.py                        # FastAPI backend (REST + SSE)
 ├── main.py                          # CLI pipeline runner
@@ -126,7 +135,7 @@ Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
 
 ---
 
-##  Installation
+## Installation
 
 ### Prerequisites
 
@@ -134,15 +143,24 @@ Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
 - **Node.js 18+** and npm
 - **Git**
 
-### 1️ Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/OmJagdale/Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications.git
 cd Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications
 ```
 
-### 2️ Backend Setup (Python)
+### 2. Backend Setup (Dual Architecture)
 
+**Option A: C++ Backend (High Performance)**
+```bash
+cd cpp_backend
+mkdir build && cd build
+cmake ..
+make
+```
+
+**Option B: Python Backend**
 ```bash
 # Create and activate virtual environment
 python3.11 -m venv myenv
@@ -154,7 +172,7 @@ pip install -r requirements.txt
 pip install fastapi uvicorn python-multipart
 ```
 
-### 3️ Frontend Setup (Node.js)
+### 3. Frontend Setup (Node.js)
 
 ```bash
 cd frontend
@@ -164,13 +182,20 @@ cd ..
 
 ---
 
-## ▶️ How to Run
+## How to Run
 
-### 🖥️ Option 1: Full Web App (React + FastAPI)
+### Option 1: Full Web App (React + C++/Python API)
 
 The web app provides video upload, real-time SSE progress streaming, live annotated frame preview, and downloadable results.
 
-**Terminal 1 — Start the API Backend:**
+**Terminal 1 — Start the API Backend (Choose one):**
+
+*Run C++ Backend:*
+```bash
+cd cpp_backend/build
+./adas_server
+```
+*OR Run Python Backend:*
 ```bash
 source myenv/bin/activate
 uvicorn server:app --host 0.0.0.0 --port 8000
@@ -184,7 +209,7 @@ npm run dev
 
 Open your browser at **`http://localhost:5173`**
 
-### 💻 Option 2: CLI Pipeline
+### Option 2: CLI Pipeline
 
 Process videos directly from the command line:
 ```bash
@@ -201,7 +226,7 @@ python main.py --input data/input_video.mp4 --output outputs/annotated_video.mp4
 | `--conf` | 0.4 | YOLO confidence threshold |
 | `--device` | cpu | Inference device: `cpu`, `cuda`, `mps` |
 
-### 🌐 Option 3: Streamlit App
+### Option 3: Streamlit App
 
 ```bash
 source myenv/bin/activate
@@ -210,7 +235,7 @@ streamlit run app.py
 
 ---
 
-##  Technologies Used
+## Technologies Used
 
 | Component | Technology | Version |
 |-----------|-----------|---------|
@@ -226,7 +251,7 @@ streamlit run app.py
 
 ---
 
-##  Algorithm Details
+## Algorithm Details
 
 ### 1. Lane Detection (Traditional CV)
 
@@ -304,13 +329,13 @@ Closing_Speed = Ego_Speed - Vehicle_Speed  (only if > 0.5 m/s)
 
 | Alert Level | Trigger Condition | Action |
 |-------------|-------------------|--------|
-| 🛑 **BRAKE** | TTC < 1.5s **or** distance < 10m | Immediate braking required |
-| ⚠️ **CAUTION** | TTC < 3.0s **or** distance < 20m | Prepare to decelerate |
-| ✅ **SAFE** | TTC ≥ 3.0s **and** distance ≥ 20m | Maintain current speed |
+| **BRAKE** | TTC < 1.5s **or** distance < 10m | Immediate braking required |
+| **CAUTION** | TTC < 3.0s **or** distance < 20m | Prepare to decelerate |
+| **SAFE** | TTC ≥ 3.0s **and** distance ≥ 20m | Maintain current speed |
 
 ---
 
-##  Performance & Accuracy Metrics
+## Performance & Accuracy Metrics
 
 ### Vehicle Detection — YOLOv11n
 
@@ -416,17 +441,17 @@ lsof -ti:8000 | xargs kill -9
 
 ---
 
-##  Applications
+## Applications
 
--  Advanced Driver Assistance Systems (ADAS)
--  Autonomous driving perception research
--  Traffic monitoring & analytics
--  Smart transportation systems
--  Driver safety research & education
--  Computer vision portfolio projects
+- Advanced Driver Assistance Systems (ADAS)
+- Autonomous driving perception research
+- Traffic monitoring & analytics
+- Smart transportation systems
+- Driver safety research & education
+- Computer vision portfolio projects
 
 
-##  License
+## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
