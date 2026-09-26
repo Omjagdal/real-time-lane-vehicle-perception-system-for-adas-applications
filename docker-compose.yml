@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  adas:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./jobs:/app/jobs
+      - ./logs:/app/logs
+      - ./outputs:/app/outputs
+    environment:
+      - ADAS_DEVICE=cpu
+      - ADAS_LOG_LEVEL=INFO
+      - ADAS_MAX_UPLOAD_MB=500
+    restart: unless-stopped

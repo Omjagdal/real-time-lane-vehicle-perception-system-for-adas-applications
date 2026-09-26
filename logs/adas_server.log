@@ -1,0 +1,32 @@
+2026-09-22 20:21:02 | INFO    | adas                 | Upload: adas_54553913.mp4 (18.3 MB) -> job 018349ab
+2026-09-22 20:21:02 | INFO    | adas.vehicle_detection | Found YOLO model: /Users/shivaai/Desktop/ADAS/real-time-lane-vehicle-perception-system-for-adas-applications/models/yolo/yolov11n.pt
+2026-09-22 20:21:02 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 20:21:02 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 20:21:02 | INFO    | adas                 | Job 018349ab: processing 500 frames at 30.0 FPS
+2026-09-22 20:21:20 | INFO    | adas                 | Job 018349ab: completed 500 frames in 18.1s (27.6 FPS avg)
+2026-09-22 20:24:36 | INFO    | adas                 | Upload: adas_54553913.mp4 (18.3 MB) -> job aa3c2b10
+2026-09-22 20:24:36 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 20:24:36 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 20:24:36 | INFO    | adas                 | Job aa3c2b10: processing 500 frames at 30.0 FPS
+2026-09-22 20:24:53 | INFO    | adas                 | Job aa3c2b10: completed 500 frames in 16.5s (30.3 FPS avg)
+2026-09-22 20:40:24 | INFO    | adas                 | Upload: 5382495-uhd_3840_2160_24fps.mp4 (106.5 MB) -> job d6a02ae9
+2026-09-22 20:40:24 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 20:40:24 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 20:40:24 | INFO    | adas                 | Job d6a02ae9: processing 818 frames at 24.0 FPS
+2026-09-22 20:41:00 | INFO    | adas                 | Job d6a02ae9: completed 818 frames in 36.4s (22.4 FPS avg)
+2026-09-22 20:57:06 | INFO    | adas                 | Upload: 5382495-uhd_3840_2160_24fps.mp4 (106.5 MB) -> job 32c99074
+2026-09-22 20:57:06 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 20:57:06 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 20:57:06 | INFO    | adas                 | Job 32c99074: processing 818 frames at 24.0 FPS
+2026-09-22 20:57:42 | INFO    | adas                 | Job 32c99074: completed 818 frames in 36.1s (22.7 FPS avg)
+2026-09-22 20:58:32 | INFO    | adas                 | Upload: 5915075-hd_1920_1080_30fps.mp4 (20.4 MB) -> job 07292d54
+2026-09-22 20:58:32 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 20:58:32 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 20:58:32 | INFO    | adas                 | Job 07292d54: processing 825 frames at 30.0 FPS
+2026-09-22 20:59:03 | INFO    | adas                 | Job 07292d54: completed 825 frames in 31.0s (26.6 FPS avg)
+2026-09-22 21:03:29 | INFO    | adas                 | Upload: 5915075-hd_1920_1080_30fps.mp4 (20.4 MB) -> job 57d87f22
+2026-09-22 21:03:29 | INFO    | adas.vehicle_detection | Found YOLO model: /Users/shivaai/Desktop/ADAS/real-time-lane-vehicle-perception-system-for-adas-applications/models/yolo/yolov11n.pt
+2026-09-22 21:03:30 | INFO    | adas                 | Creating pipeline: conf=0.4, device=cpu, ego=60.0
+2026-09-22 21:03:30 | INFO    | adas.vehicle_detection | VehicleDetector ready on cpu (conf=0.4)
+2026-09-22 21:03:30 | INFO    | adas                 | Job 57d87f22: processing 825 frames at 30.0 FPS
+2026-09-22 21:04:01 | INFO    | adas                 | Job 57d87f22: completed 825 frames in 31.6s (26.1 FPS avg)
