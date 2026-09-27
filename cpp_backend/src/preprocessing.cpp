@@ -1,3 +1,13 @@
+/**
+ * @file    preprocessing.cpp
+ * @brief   Image preprocessing pipeline implementation.
+ *
+ * Implements frame normalisation, contrast enhancement, edge detection,
+ * and ROI masking. All functions are stateless and thread-safe.
+ *
+ * @author  Om Jagdale
+ */
+
 #include "preprocessing.hpp"
 #include <opencv2/imgproc.hpp>
 #include <algorithm>

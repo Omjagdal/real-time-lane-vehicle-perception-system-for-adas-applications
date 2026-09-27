@@ -1,3 +1,18 @@
+/**
+ * @file    vehicle_detection.cpp
+ * @brief   YOLOv11n ONNX inference via OpenCV DNN backend.
+ *
+ * Loads the ONNX model at construction and performs per-frame inference
+ * with letterbox resizing, confidence filtering, COCO class filtering,
+ * and Non-Maximum Suppression post-processing.
+ *
+ * Output tensor format (YOLOv8/v11): [1, 84, 8400] → transposed to
+ * [8400, 84] where columns 0-3 are (cx, cy, w, h) and columns 4-83
+ * are per-class confidence scores.
+ *
+ * @author  Om Jagdale
+ */
+
 #include "vehicle_detection.hpp"
 #include "config.hpp"
 #include <iostream>
@@ -30,8 +45,6 @@ namespace vehicle_detection {
     }
 
     std::vector<Detection> VehicleDetector::detect(const cv::Mat& frame) {
-        auto t_start = std::chrono::high_resolution_clock::now();
-
         cv::Mat input_image = format_image(frame);
         cv::Mat blob = cv::dnn::blobFromImage(input_image, 1.0 / 255.0, cv::Size(640, 640), cv::Scalar(), true, false);
 
@@ -102,11 +115,12 @@ namespace vehicle_detection {
 
         std::vector<Detection> results;
         for (int idx : indices) {
+            size_t i = static_cast<size_t>(idx);
             Detection d;
-            d.bbox = boxes[idx];
-            d.class_id = class_ids[idx];
+            d.bbox = boxes[i];
+            d.class_id = class_ids[i];
             d.label = config::VEHICLE_CLASSES.at(d.class_id);
-            d.confidence = confidences[idx];
+            d.confidence = confidences[i];
             d.timestamp = timestamp;
             d.cx = d.bbox.x + d.bbox.width / 2;
             d.cy = d.bbox.y + d.bbox.height / 2;

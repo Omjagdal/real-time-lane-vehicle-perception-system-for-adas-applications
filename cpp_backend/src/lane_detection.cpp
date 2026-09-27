@@ -1,3 +1,14 @@
+/**
+ * @file    lane_detection.cpp
+ * @brief   Lane detection using Probabilistic Hough Transform with temporal smoothing.
+ *
+ * Implements slope-based line classification, statistical outlier rejection,
+ * length-weighted averaging, sliding-window temporal smoothing, and lane
+ * departure detection based on lateral offset from the frame centre.
+ *
+ * @author  Om Jagdale
+ */
+
 #include "lane_detection.hpp"
 #include "config.hpp"
 #include <numeric>
@@ -152,14 +163,14 @@ namespace lane_detection {
         double alpha = config::LANE_EMA_ALPHA;
         std::vector<double> weights(history.size());
         double weight_sum = 0.0;
-        for (int i = 0; i < history.size(); ++i) {
+        for (size_t i = 0; i < history.size(); ++i) {
             weights[i] = alpha * std::pow(1 - alpha, history.size() - 1 - i);
             weight_sum += weights[i];
         }
 
         double final_slope = 0.0;
         double final_intercept = 0.0;
-        for (int i = 0; i < history.size(); ++i) {
+        for (size_t i = 0; i < history.size(); ++i) {
             final_slope += std::get<0>(history[i]) * (weights[i] / weight_sum);
             final_intercept += std::get<1>(history[i]) * (weights[i] / weight_sum);
         }

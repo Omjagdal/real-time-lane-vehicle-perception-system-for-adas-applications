@@ -1,3 +1,15 @@
+/**
+ * @file    visualization.cpp
+ * @brief   Annotated frame rendering, HUD overlay, and bird's-eye-view minimap.
+ *
+ * Composable drawing functions that overlay perception results onto video
+ * frames. Includes lane polygon fill, colour-coded bounding boxes with
+ * tracking metadata, FCW alert banners, HUD statistics panel, and a
+ * top-down minimap showing nearby vehicle positions.
+ *
+ * @author  Om Jagdale
+ */
+
 #include "visualization.hpp"
 #include "config.hpp"
 #include <iomanip>

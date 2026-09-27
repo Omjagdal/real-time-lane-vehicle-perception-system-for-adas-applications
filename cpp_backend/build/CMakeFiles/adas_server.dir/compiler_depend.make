@@ -794,7 +794,6 @@ CMakeFiles/adas_server.dir/src/estimators.cpp.o: /Users/shivaai/Desktop/ADAS/rea
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/limits.h \
@@ -814,7 +813,6 @@ CMakeFiles/adas_server.dir/src/lane_detection.cpp.o: /Users/shivaai/Desktop/ADAS
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -1635,7 +1633,6 @@ CMakeFiles/adas_server.dir/src/lane_detection.cpp.o: /Users/shivaai/Desktop/ADAS
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -1648,7 +1645,6 @@ CMakeFiles/adas_server.dir/src/lane_detection.cpp.o: /Users/shivaai/Desktop/ADAS
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -1783,7 +1779,6 @@ CMakeFiles/adas_server.dir/src/main.cpp.o: /Users/shivaai/Desktop/ADAS/real-time
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -2525,6 +2520,7 @@ CMakeFiles/adas_server.dir/src/main.cpp.o: /Users/shivaai/Desktop/ADAS/real-time
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/ratio \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/regex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/set \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/shared_mutex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/stack \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/stddef.h \
@@ -2720,7 +2716,6 @@ CMakeFiles/adas_server.dir/src/main.cpp.o: /Users/shivaai/Desktop/ADAS/real-time
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -2733,7 +2728,6 @@ CMakeFiles/adas_server.dir/src/main.cpp.o: /Users/shivaai/Desktop/ADAS/real-time
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -2874,7 +2868,6 @@ CMakeFiles/adas_server.dir/src/preprocessing.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -3678,7 +3671,6 @@ CMakeFiles/adas_server.dir/src/preprocessing.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -3691,7 +3683,6 @@ CMakeFiles/adas_server.dir/src/preprocessing.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -3825,7 +3816,6 @@ CMakeFiles/adas_server.dir/src/tracker.cpp.o: /Users/shivaai/Desktop/ADAS/real-t
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -4629,7 +4619,6 @@ CMakeFiles/adas_server.dir/src/tracker.cpp.o: /Users/shivaai/Desktop/ADAS/real-t
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -4642,7 +4631,6 @@ CMakeFiles/adas_server.dir/src/tracker.cpp.o: /Users/shivaai/Desktop/ADAS/real-t
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -4777,7 +4765,6 @@ CMakeFiles/adas_server.dir/src/vehicle_detection.cpp.o: /Users/shivaai/Desktop/A
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -5581,7 +5568,6 @@ CMakeFiles/adas_server.dir/src/vehicle_detection.cpp.o: /Users/shivaai/Desktop/A
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -5594,7 +5580,6 @@ CMakeFiles/adas_server.dir/src/vehicle_detection.cpp.o: /Users/shivaai/Desktop/A
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -5728,7 +5713,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/__xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_abort.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_ctype.h \
@@ -6532,7 +6516,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/xlocale/_wctype.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stdarg_header_macro.h \
@@ -6545,7 +6528,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_nullptr_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_offsetof.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
-  /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_size_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_wchar_t.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h \
@@ -6726,6 +6708,8 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/unordered_set:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/thread:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/shared_mutex:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/regex:
 
@@ -6955,8 +6939,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 
 /Library/Developer/CommandLineTools/usr/lib/clang/21/include/arm_bf16.h:
 
-/Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_infinity_nan.h:
-
 /opt/homebrew/Cellar/opencv/4.13.0_15/include/opencv4/opencv2/flann/autotuned_index.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_float.h:
@@ -7035,8 +7017,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/assert.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_assert.h:
-
 /Users/shivaai/Desktop/ADAS/real-time-lane-vehicle-perception-system-for-adas-applications/cpp_backend/src/lane_detection.cpp:
 
 /Users/shivaai/Desktop/ADAS/real-time-lane-vehicle-perception-system-for-adas-applications/cpp_backend/include/estimators.hpp:
@@ -7045,13 +7025,13 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 
 /Library/Developer/CommandLineTools/usr/lib/clang/21/include/stddef.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__debug_utils/strict_weak_ordering_check.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/21/include/ptrcheck.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/reduce.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/21/include/limits.h:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_rsize_t.h:
 
 /opt/homebrew/Cellar/opencv/4.13.0_15/include/opencv4/opencv2/core/neon_utils.hpp:
 
@@ -8169,10 +8149,6 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__configuration/language.h:
 
-/Library/Developer/CommandLineTools/usr/lib/clang/21/include/ptrcheck.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__debug_utils/strict_weak_ordering_check.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__debug_utils/randomize_range.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/poll.h:
@@ -8276,6 +8252,8 @@ CMakeFiles/adas_server.dir/src/visualization.cpp.o: /Users/shivaai/Desktop/ADAS/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__atomic/atomic_init.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__concepts/boolean_testable.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/21/include/__stddef_ptrdiff_t.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/21/include/__float_header_macro.h:
 
