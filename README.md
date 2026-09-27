@@ -1,147 +1,355 @@
-# Real-Time Lane & Vehicle Perception System for ADAS Applications
+# Real-Time Lane and Vehicle Perception System for ADAS Applications
 
-An end-to-end **Advanced Driver Assistance System (ADAS)** perception pipeline that performs lane detection, vehicle detection, multi-object tracking, distance/speed estimation, and forward collision warning (FCW) in real time using dashcam or traffic camera video streams.
+A modular, real-time **Advanced Driver Assistance System (ADAS)** perception pipeline implementing lane detection, vehicle detection and tracking, monocular distance and speed estimation, and forward collision warning. Designed as a production-grade reference architecture for automotive computer vision, with dual C++17 and Python backends, a reactive web dashboard, and ISO 15622-aligned collision warning logic.
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
-![C++](https://img.shields.io/badge/C++-17-00599C.svg)
-![React](https://img.shields.io/badge/React-18+-61DAFB.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.135+-009688.svg)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-5C3EE8.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-2.1+-EE4C2C.svg)
-![YOLOv11](https://img.shields.io/badge/YOLOv11n-Ultralytics-00FFFF.svg)
-![ONNX](https://img.shields.io/badge/ONNX-Model-005CED.svg)
+![C++](https://img.shields.io/badge/C++-17-00599C.svg?logo=cplusplus)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.8+-5C3EE8.svg?logo=opencv)
+![ONNX](https://img.shields.io/badge/ONNX-Runtime-005CED.svg?logo=onnx)
+![YOLOv11](https://img.shields.io/badge/YOLOv11n-Ultralytics-111F68.svg)
+![React](https://img.shields.io/badge/React-18+-61DAFB.svg?logo=react&logoColor=black)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.135+-009688.svg?logo=fastapi)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ---
-Output Video
 
+## Table of Contents
 
-
-[Click here to watch the output video](https://github.com/Omjagdal/real-time-lane-vehicle-perception-system-for-adas-applications/blob/main/adas_54553913.mp4)
+1. [Overview](#overview)
+2. [System Architecture](#system-architecture)
+3. [Perception Pipeline](#perception-pipeline)
+4. [Module Specifications](#module-specifications)
+5. [Project Structure](#project-structure)
+6. [Build and Installation](#build-and-installation)
+7. [Usage](#usage)
+8. [Performance Benchmarks](#performance-benchmarks)
+9. [Configuration Reference](#configuration-reference)
+10. [Limitations and Future Work](#limitations-and-future-work)
+11. [References](#references)
+12. [License](#license)
 
 ---
 
-## Key Features
+## Overview
 
-| Feature | Description |
-|---------|-------------|
-| **Real-Time Video Processing** | Upload dashcam/traffic videos and process frame-by-frame with live preview |
-| **Lane Detection** | Canny edge detection + Hough Line Transform with temporal smoothing |
-| **Vehicle Detection** | YOLOv11n (nano) — filters cars, motorcycles, buses, trucks |
-| **Multi-Object Tracking** | IoU-based tracker with Hungarian algorithm assignment & ID persistence |
-| **Monocular Distance Estimation** | Pinhole camera model with perspective correction |
-| **Speed Estimation** | Frame-to-frame pixel displacement with EMA smoothing |
-| **Forward Collision Warning** | Time-To-Collision (TTC) based 3-tier alert system |
-| **Rich Visualization** | Annotated overlays — lanes, bounding boxes, distance, speed & FCW banners |
-| **Modern Web UI** | React + Vite frontend with SSE streaming & real-time dashboard |
-| **Video Download** | Download fully annotated MP4 output after processing |
+This system addresses the core perception requirements of an ADAS pipeline: understanding the ego vehicle's lane position, detecting and tracking surrounding traffic participants, estimating their kinematic state, and generating safety-critical collision warnings.
+
+### Design Objectives
+
+- **Real-time performance**: Sub-100 ms per-frame latency on consumer GPU hardware at 1280x720 resolution.
+- **Modularity**: Each perception component (detection, tracking, estimation, warning) operates as an independent module with well-defined interfaces.
+- **Dual-backend architecture**: A high-performance C++17 backend using OpenCV DNN for ONNX inference, and a Python backend using Ultralytics/PyTorch for rapid prototyping.
+- **Production patterns**: Kalman-filtered tracking, temporal smoothing, hysteresis-based alert suppression, and configurable thresholds reflect patterns used in production ADAS stacks.
+
+### Output Demo
+
+https://github.com/Omjagdal/real-time-lane-vehicle-perception-system-for-adas-applications/blob/main/adas_54553913.mp4
 
 ---
 
 ## System Architecture
 
+The system follows a pipelined architecture with clear separation between perception, estimation, and decision layers.
+
 ```
-                        ┌─────────────────────────┐
-                        │    Input Video Stream    │
-                        └────────────┬────────────┘
-                                     ↓
-                        ┌─────────────────────────┐
-                        │    Preprocessing         │
-                        │  Resize (1280×720)       │
-                        │  Normalize / Color Conv  │
-                        └─────┬──────────┬────────┘
-                              ↓          ↓
-                   ┌──────────────┐ ┌──────────────────┐
-                   │ Lane         │ │ Vehicle Detection │
-                   │ Detection    │ │ (YOLOv11n)        │
-                   │ (Canny +     │ │ conf: 0.4         │
-                   │  Hough)      │ │ NMS IoU: 0.45     │
-                   └──────┬───────┘ └────────┬─────────┘
-                          │                  ↓
-                          │         ┌──────────────────┐
-                          │         │ IoU Tracker       │
-                          │         │ Hungarian Assign  │
-                          │         │ ID Persistence    │
-                          │         └────────┬─────────┘
-                          │                  ↓
-                          │         ┌──────────────────┐
-                          │         │ Distance & Speed  │
-                          │         │ Estimation        │
-                          │         │ (Pinhole + EMA)   │
-                          │         └────────┬─────────┘
-                          │                  ↓
-                          │         ┌──────────────────┐
-                          │         │ FCW Engine        │
-                          │         │ TTC Calculation   │
-                          │         │ 3-Tier Alerts     │
-                          │         └────────┬─────────┘
-                          ↓                  ↓
-                        ┌─────────────────────────┐
-                        │    Visualization &       │
-                        │    Annotated Output      │
-                        └─────────────────────────┘
+ ┌───────────────────────────────────────────────────────────────────┐
+ │                        INPUT LAYER                                │
+ │   Video Source (MP4/AVI/MOV) ──► Frame Acquisition (OpenCV)       │
+ └──────────────────────────────┬────────────────────────────────────┘
+                                │
+ ┌──────────────────────────────▼────────────────────────────────────┐
+ │                     PREPROCESSING LAYER                           │
+ │   Resize (1280×720) ──► CLAHE ──► Gaussian Blur ──► ROI Masking   │
+ │                    ──► Adaptive Canny Edge Detection               │
+ └─────────┬────────────────────────────────────┬───────────────────┘
+           │                                    │
+ ┌─────────▼──────────────┐     ┌───────────────▼───────────────────┐
+ │   LANE PERCEPTION       │     │   OBJECT PERCEPTION               │
+ │                         │     │                                    │
+ │   Hough Transform       │     │   YOLOv11n (ONNX / PyTorch)       │
+ │   Slope Filtering       │     │   COCO Vehicle Class Filtering     │
+ │   Outlier Rejection     │     │   NMS Post-Processing              │
+ │   Temporal Smoothing    │     │   Confidence Thresholding          │
+ │   Lane Departure Detect │     │                                    │
+ └─────────┬───────────────┘     └───────────────┬───────────────────┘
+           │                                     │
+           │                     ┌───────────────▼───────────────────┐
+           │                     │   TRACKING LAYER                   │
+           │                     │                                    │
+           │                     │   IoU Cost Matrix                  │
+           │                     │   Hungarian Assignment             │
+           │                     │   Kalman Filter Prediction         │
+           │                     │   Track Lifecycle Management       │
+           │                     └───────────────┬───────────────────┘
+           │                                     │
+           │                     ┌───────────────▼───────────────────┐
+           │                     │   ESTIMATION LAYER                 │
+           │                     │                                    │
+           │                     │   Pinhole Camera Distance Model    │
+           │                     │   Pixel-Displacement Speed Est.    │
+           │                     │   EMA Temporal Smoothing            │
+           │                     │   Perspective Correction            │
+           │                     └───────────────┬───────────────────┘
+           │                                     │
+ ┌─────────▼─────────────────────────────────────▼───────────────────┐
+ │                       DECISION LAYER                               │
+ │                                                                    │
+ │   Forward Collision Warning (FCW)                                  │
+ │   Time-To-Collision (TTC) Computation                              │
+ │   Three-Tier Alert Classification (SAFE / CAUTION / BRAKE)         │
+ │   Hysteresis-Based Alert Suppression                               │
+ └──────────────────────────────┬────────────────────────────────────┘
+                                │
+ ┌──────────────────────────────▼────────────────────────────────────┐
+ │                       OUTPUT LAYER                                 │
+ │   Annotated Frame Rendering ──► HUD Overlay ──► Minimap            │
+ │   SSE Live Streaming ──► React Dashboard ──► MP4 Export            │
+ └───────────────────────────────────────────────────────────────────┘
 ```
+
+### Communication Architecture
+
+```
+ ┌──────────────┐     REST + SSE      ┌──────────────────────┐
+ │  React 18    │ ◄──────────────────► │  FastAPI / C++ HTTP  │
+ │  Vite 7      │   POST /api/upload   │  Server (Port 8000)  │
+ │  Port 5173   │   GET  /api/process  │                      │
+ │              │   GET  /api/frame    │  Pipeline Engine     │
+ │  Recharts    │   GET  /api/download │  (OpenCV + YOLO)     │
+ └──────────────┘                      └──────────────────────┘
+```
+
+---
+
+## Perception Pipeline
+
+### Frame Processing Sequence
+
+Each video frame passes through the following stages in order:
+
+| Stage | Module | Input | Output | Latency (GPU) |
+|-------|--------|-------|--------|----------------|
+| 1 | Preprocessing | Raw BGR frame | Resized frame + edge map | < 2 ms |
+| 2 | Lane Detection | Canny edge image | Left/right lane polynomials | < 3 ms |
+| 3 | Vehicle Detection | BGR frame (1280x720) | Bounding boxes + class labels | ~ 5 ms |
+| 4 | Multi-Object Tracking | Detection list | Tracked objects with persistent IDs | < 1 ms |
+| 5 | Distance Estimation | Tracked bounding boxes | Per-vehicle distance (metres) | < 0.5 ms |
+| 6 | Speed Estimation | Distance time series | Per-vehicle speed (km/h) | < 0.5 ms |
+| 7 | FCW Evaluation | Distances + speeds | Per-vehicle TTC + alert level | < 0.1 ms |
+| 8 | Visualization | All perception outputs | Annotated frame with HUD | < 3 ms |
+
+---
+
+## Module Specifications
+
+### 1. Preprocessing
+
+Converts raw camera input into formats suitable for downstream perception modules.
+
+| Operation | Method | Parameters |
+|-----------|--------|------------|
+| Resize | Bilinear interpolation | 1280 x 720 px |
+| Contrast Enhancement | CLAHE (Contrast Limited Adaptive Histogram Equalization) | clip = 2.0, tile = 8x8 |
+| Noise Reduction | Gaussian blur | kernel = 5x5 |
+| Edge Detection | Adaptive Canny (Otsu-based thresholding) | auto low/high |
+| ROI Masking | Trapezoidal region of interest | Bottom 42% of frame |
+
+### 2. Lane Detection
+
+Classical computer vision pipeline for detecting and stabilizing lane markings.
+
+**Algorithm**:
+1. Apply Probabilistic Hough Transform on the edge-detected ROI image.
+2. Classify line segments as left or right by slope polarity.
+3. Reject outliers beyond 1.5 sigma from the mean slope.
+4. Compute length-weighted average of slope and intercept per side.
+5. Apply temporal smoothing using a sliding window (N=10 frames, EMA alpha=0.3).
+6. Extrapolate lane lines from the ROI boundary to the bottom of the frame.
+
+**Lane Departure Detection**: Monitors the horizontal offset between the frame centre and the midpoint of the detected left and right lanes. Triggers `LEFT_DEPARTURE` or `RIGHT_DEPARTURE` when the offset exceeds a threshold.
+
+| Parameter | Value |
+|-----------|-------|
+| Hough rho | 1 px |
+| Hough threshold | 30 votes |
+| Min line length | 40 px |
+| Max line gap | 100 px |
+| Slope range | [0.4, 10.0] |
+| Smoothing window | 10 frames |
+
+### 3. Vehicle Detection (YOLOv11n)
+
+Real-time object detection using the YOLO v11 Nano architecture.
+
+**Model**: YOLOv11n (Ultralytics) — 2.6M parameters, 5.8 MB (FP32).
+
+**Inference Backends**:
+- **C++ Backend**: OpenCV DNN module with ONNX model loading.
+- **Python Backend**: Ultralytics API with PyTorch runtime.
+
+**Post-processing**:
+1. Filter detections to vehicle-relevant COCO classes: car (2), motorcycle (3), bus (5), truck (7).
+2. Apply confidence threshold (default: 0.40).
+3. Apply Non-Maximum Suppression with IoU threshold 0.45.
+4. Compute bounding box centroid and area for downstream modules.
+
+### 4. Multi-Object Tracking
+
+IoU-based multi-object tracker with Kalman filter motion prediction and Hungarian algorithm assignment.
+
+**Track Lifecycle**:
+
+```
+Detection ──► Tentative Track (hits < min_hits)
+                    │
+                    ▼ (matched for min_hits consecutive frames)
+              Confirmed Track ──► Active Tracking
+                    │
+                    ▼ (unmatched for max_age frames)
+              Track Deletion
+```
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| IoU threshold | 0.25 | Minimum overlap for assignment |
+| Max age | 8 frames | Frames before track deletion |
+| Min hits | 2 frames | Consecutive matches to confirm |
+| BBox smoothing | EMA alpha = 0.5 | Reduces bounding box jitter |
+| Kalman filter | 7-state linear model | Position + velocity + aspect ratio |
+
+**Assignment**: The cost matrix `C[i][j] = 1.0 - IoU(track_i, detection_j)` is solved using the Hungarian algorithm (`scipy.linear_sum_assignment` in Python, custom implementation in C++).
+
+### 5. Distance Estimation
+
+Monocular distance estimation using the pinhole camera model with perspective correction.
+
+**Formula**:
+
+```
+distance_raw = (real_width * focal_length) / pixel_width
+
+correction = 1.0 - alpha * (cy - H/2) / (H/2)
+distance = distance_raw * max(correction, 0.1)
+distance = clamp(EMA_smooth(distance), 1.0, 200.0)
+```
+
+| Vehicle Class | Assumed Real Width |
+|---------------|-------------------|
+| Car | 1.8 m |
+| Motorcycle | 0.8 m |
+| Bus | 2.5 m |
+| Truck | 2.4 m |
+
+**Calibration assumptions**: Focal length = 850 px (for 1280x720), camera height = 1.3 m, pitch = 2 degrees.
+
+### 6. Speed Estimation
+
+Derives per-vehicle speed from frame-to-frame distance changes, smoothed with Exponential Moving Average.
+
+**Method**:
+1. Maintain a sliding window of distance measurements per track (N=10).
+2. Compute speed from multi-frame displacement: `speed = delta_distance / delta_time`.
+3. Reject implausible speed jumps (> 50 km/h between frames).
+4. Apply EMA smoothing (alpha = 0.35).
+5. Clamp output to [0, 250] km/h.
+
+### 7. Forward Collision Warning (FCW)
+
+Time-To-Collision (TTC) based warning system with three severity tiers and hysteresis-based alert suppression to prevent oscillation.
+
+**TTC Computation**:
+
+```
+closing_speed = ego_speed - vehicle_speed    (m/s)
+TTC = distance / closing_speed               (only if closing_speed > 0.5 m/s)
+```
+
+**Alert Classification** (aligned with ISO 15622 principles):
+
+| Alert Level | TTC Condition | Distance Condition | Driver Action |
+|-------------|---------------|--------------------|---------------|
+| **BRAKE** | TTC < 1.5 s | OR distance < 10 m | Immediate braking required |
+| **CAUTION** | TTC < 3.0 s | OR distance < 20 m | Prepare to decelerate |
+| **SAFE** | TTC >= 3.0 s | AND distance >= 20 m | Maintain current speed |
+
+**Hysteresis**: An alert level must persist for 3 consecutive frames before being promoted to prevent rapid flickering between states.
 
 ---
 
 ## Project Structure
 
 ```
-Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications/
+.
+├── cpp_backend/                          # High-Performance C++17 Backend
+│   ├── CMakeLists.txt                    # CMake build configuration
+│   ├── include/
+│   │   ├── config.hpp                    # Pipeline parameters and constants
+│   │   ├── preprocessing.hpp             # Frame preprocessing interface
+│   │   ├── lane_detection.hpp            # Lane detection with temporal smoothing
+│   │   ├── vehicle_detection.hpp         # YOLOv11n ONNX inference via OpenCV DNN
+│   │   ├── tracker.hpp                   # IoU + Kalman multi-object tracker
+│   │   ├── estimators.hpp                # Distance, speed, and FCW estimation
+│   │   ├── visualization.hpp             # HUD, annotation, and minimap rendering
+│   │   ├── httplib.h                     # cpp-httplib (embedded HTTP server)
+│   │   └── nlohmann/json.hpp             # nlohmann/json (JSON serialization)
+│   ├── src/
+│   │   ├── main.cpp                      # HTTP server + pipeline orchestration
+│   │   ├── preprocessing.cpp             # Resize, CLAHE, Canny, ROI
+│   │   ├── lane_detection.cpp            # Hough Transform lane pipeline
+│   │   ├── vehicle_detection.cpp         # ONNX model loading and inference
+│   │   ├── tracker.cpp                   # Hungarian assignment + Kalman filter
+│   │   ├── estimators.cpp                # Pinhole distance + TTC computation
+│   │   └── visualization.cpp             # OpenCV drawing and HUD overlay
+│   └── models/
+│       └── yolo11n.onnx                  # YOLOv11n ONNX weights (10.7 MB)
 │
-├── frontend/                        # React + Vite Web UI
+├── src/                                  # Python Perception Modules
+│   ├── __init__.py
+│   ├── preprocessing.py                  # Frame preprocessing pipeline
+│   ├── lane_detection.py                 # Hough Transform lane detection
+│   ├── vehicle_detection.py              # Ultralytics YOLOv11n wrapper
+│   ├── tracker.py                        # IoU multi-object tracker
+│   ├── distance.py                       # Monocular distance estimation
+│   ├── speed.py                          # Pixel-displacement speed estimation
+│   ├── fcw.py                            # Forward Collision Warning engine
+│   └── visualization.py                  # Annotated frame rendering
+│
+├── frontend/                             # React 18 + Vite Web Dashboard
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Header.jsx           # Navigation header
-│   │   │   ├── UploadPage.jsx       # Video upload + settings panel
-│   │   │   ├── ProcessingPage.jsx   # Live preview + SSE progress
-│   │   │   ├── ResultsPage.jsx      # Summary charts + download
-│   │   │   └── MetricCard.jsx       # Reusable metric display card
-│   │   ├── App.jsx                  # Main app (state machine router)
-│   │   ├── App.css                  # Component styles
-│   │   ├── index.css                # Global styles + design system
-│   │   └── main.jsx                 # Entry point
-│   ├── index.html
+│   │   │   ├── Header.jsx                # Navigation and pipeline step indicator
+│   │   │   ├── IntroPage.jsx             # System overview and feature showcase
+│   │   │   ├── UploadPage.jsx            # Video upload with pipeline configuration
+│   │   │   ├── ProcessingPage.jsx        # Real-time SSE progress and live preview
+│   │   │   ├── ResultsPage.jsx           # Summary analytics and video download
+│   │   │   └── MetricCard.jsx            # Reusable metric display component
+│   │   ├── App.jsx                       # State-machine page router
+│   │   └── index.css                     # Design system (glassmorphism theme)
 │   └── package.json
 │
-├── src/                             # Core Python ADAS Pipeline
-│   ├── __init__.py
-│   ├── preprocessing.py             # Resize, grayscale, Canny, ROI masking
-│   ├── lane_detection.py            # Hough Transform lane detection
-│   ├── vehicle_detection.py         # YOLOv11n vehicle detector wrapper
-│   ├── tracker.py                   # IoU multi-object tracker (Hungarian)
-│   ├── distance.py                  # Monocular distance estimation
-│   ├── speed.py                     # Pixel-displacement speed estimation
-│   ├── fcw.py                       # Forward Collision Warning engine
-│   └── visualization.py            # Drawing overlays, HUD, banners
-│
-├── cpp_backend/                     # High-Performance C++ Backend
-│   ├── src/                         # C++ implementations (Lane, Tracking, etc.)
-│   ├── include/                     # C++ header files
-│   ├── CMakeLists.txt               # Build configuration
-│   └── models/
-│       └── yolo11n.onnx             # YOLOv11 ONNX weights for OpenCV DNN
-│
-├── models/
-│   └── yolo/
-│       └── yolov11n.pt              # YOLOv11 Nano weights (Python)
-│
-├── server.py                        # FastAPI backend (REST + SSE)
-├── main.py                          # CLI pipeline runner
-├── app.py                           # Streamlit app (alternative UI)
-├── requirements.txt                 # Python dependencies
+├── server.py                             # FastAPI REST + SSE backend
+├── main.py                               # CLI pipeline runner
+├── config.py                             # Python pipeline configuration
+├── app.py                                # Streamlit alternative UI
+├── Dockerfile                            # Container build specification
+├── docker-compose.yml                    # Multi-service orchestration
+├── requirements.txt                      # Python dependencies
 └── README.md
 ```
 
 ---
 
-## Installation
+## Build and Installation
 
 ### Prerequisites
 
-- **Python 3.11+**
-- **Node.js 18+** and npm
-- **Git**
+| Dependency | Version | Purpose |
+|------------|---------|---------|
+| Python | 3.11+ | Python backend and CLI |
+| Node.js | 18+ | React frontend build |
+| CMake | 3.14+ | C++ backend build |
+| OpenCV | 4.8+ | Computer vision and DNN inference |
+| Git | 2.x | Version control |
 
 ### 1. Clone the Repository
 
@@ -150,29 +358,28 @@ git clone https://github.com/OmJagdale/Real-time-lane-Vehicle-Perception-system-
 cd Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications
 ```
 
-### 2. Backend Setup (Dual Architecture)
+### 2. C++ Backend (Recommended for Performance)
 
-**Option A: C++ Backend (High Performance)**
 ```bash
 cd cpp_backend
-mkdir build && cd build
+mkdir -p build && cd build
 cmake ..
-make
+make -j$(nproc)
+cd ../..
 ```
 
-**Option B: Python Backend**
-```bash
-# Create and activate virtual environment
-python3.11 -m venv myenv
-source myenv/bin/activate        # Linux / macOS
-myenv\Scripts\activate           # Windows
+**Dependencies**: OpenCV 4.8+ with DNN module (`brew install opencv` on macOS, `sudo apt install libopencv-dev` on Ubuntu).
 
-# Install all dependencies
+### 3. Python Backend (Alternative)
+
+```bash
+python3.11 -m venv myenv
+source myenv/bin/activate
 pip install -r requirements.txt
 pip install fastapi uvicorn python-multipart
 ```
 
-### 3. Frontend Setup (Node.js)
+### 4. Frontend
 
 ```bash
 cd frontend
@@ -182,276 +389,161 @@ cd ..
 
 ---
 
-## How to Run
+## Usage
 
-### Option 1: Full Web App (React + C++/Python API)
+### Web Application (Recommended)
 
-The web app provides video upload, real-time SSE progress streaming, live annotated frame preview, and downloadable results.
+Start the backend (choose one):
 
-**Terminal 1 — Start the API Backend (Choose one):**
-
-*Run C++ Backend:*
 ```bash
-cd cpp_backend/build
-./adas_server
-```
-*OR Run Python Backend:*
-```bash
+# Option A: C++ Backend (high performance)
+./cpp_backend/build/adas_server
+
+# Option B: Python Backend
 source myenv/bin/activate
 uvicorn server:app --host 0.0.0.0 --port 8000
 ```
 
-**Terminal 2 — Start the React Frontend:**
+Start the frontend:
+
 ```bash
 cd frontend
 npm run dev
 ```
 
-Open your browser at **`http://localhost:5173`**
+Open `http://localhost:5173` in your browser. Upload a dashcam video, configure pipeline parameters, and view real-time annotated results.
 
-### Option 2: CLI Pipeline
+### Command-Line Interface
 
-Process videos directly from the command line:
 ```bash
 source myenv/bin/activate
-python main.py --input data/input_video.mp4 --output outputs/annotated_video.mp4
+python main.py --input data/dashcam.mp4 --output outputs/annotated.mp4 --device cuda --conf 0.4
 ```
 
-**CLI Arguments:**
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `--input` | — | Path to input video file |
-| `--output` | — | Path to save annotated output |
-| `--fps` | 30 | Target FPS for processing |
+| `--input` | required | Path to input video file |
+| `--output` | required | Path to save annotated output |
+| `--fps` | 30 | Target processing FPS |
 | `--conf` | 0.4 | YOLO confidence threshold |
 | `--device` | cpu | Inference device: `cpu`, `cuda`, `mps` |
 
-### Option 3: Streamlit App
+### Docker
 
 ```bash
-source myenv/bin/activate
-streamlit run app.py
+docker-compose up --build
 ```
 
 ---
 
-## Technologies Used
+## Performance Benchmarks
 
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| **Backend API** | FastAPI + Uvicorn | 0.135+ |
-| **Frontend UI** | React + Vite + Recharts | React 18+ |
-| **Styling** | Tailwind CSS + Custom CSS | — |
-| **Computer Vision** | OpenCV | 4.8+ |
-| **Deep Learning** | PyTorch | 2.1+ |
-| **Object Detection** | YOLOv11n (Ultralytics) | 8.4+ |
-| **Tracking** | IoU + SciPy Hungarian (linear_sum_assignment) | — |
-| **Streaming** | Server-Sent Events (SSE) | — |
-| **HTTP Client** | Axios | — |
-
----
-
-## Algorithm Details
-
-### 1. Lane Detection (Traditional CV)
-
-| Step | Method | Parameters |
-|------|--------|------------|
-| Preprocessing | Resize → Grayscale → Gaussian Blur (5×5) | — |
-| Edge Detection | Canny | threshold1=50, threshold2=150 |
-| ROI Masking | Trapezoidal mask (lower 42% of frame) | — |
-| Line Detection | Probabilistic Hough Transform | threshold=30, minLen=40, maxGap=100 |
-| Filtering | Slope-based (left/right separation) | slope ∈ [0.4, 10.0] |
-| Smoothing | Length-weighted average + 8-frame temporal rolling | — |
-
-### 2. Vehicle Detection (YOLOv11n)
-
-```
-Input Frame (1280×720 BGR)
-       ↓
-  YOLOv11n Inference
-       ↓
-  Filter COCO Vehicle Classes
-    ├── Class 2: Car
-    ├── Class 3: Motorcycle
-    ├── Class 5: Bus
-    └── Class 7: Truck
-       ↓
-  Apply Confidence Threshold (0.4)
-       ↓
-  Apply NMS (IoU 0.45)
-       ↓
-  Output: List[Detection(bbox, class_id, label, confidence)]
-```
-
-### 3. Multi-Object Tracking (IoU Tracker)
-
-- **Assignment**: Hungarian algorithm on IoU cost matrix
-- **IoU Threshold**: 0.30 (minimum overlap for match)
-- **Max Age**: 5 frames (track survives without match)
-- **Min Hits**: 2 frames (track confirmed after consecutive matches)
-- **Output**: Persistent `track_id` across frames
-
-### 4. Distance Estimation (Pinhole Camera Model)
-
-```
-Distance (m) = (Real_Width × Focal_Length) / Pixel_Width
-
-Perspective Correction:
-  correction = 1.0 - 0.5 × (cy - frame_height/2) / (frame_height/2)
-  distance *= max(correction, 0.1)
-
-Known Real Widths:
-  Car: 1.8m | Motorcycle: 0.8m | Bus: 2.5m | Truck: 2.4m
-
-Focal Length: 850 pixels (assumed for 1280×720)
-Output Range: [1.0, 200.0] metres (clamped)
-```
-
-### 5. Speed Estimation (Pixel Displacement + EMA)
-
-```
-pixel_displacement = √((x₂-x₁)² + (y₂-y₁)²)
-scale = 153 px/m × (10m / distance)
-displacement_m = pixel_displacement / scale
-speed_kmh = displacement_m × FPS × 3.6
-
-Smoothing: EMA with α = 0.4
-Output Range: [0.0, 250.0] km/h (clamped)
-```
-
-### 6. Forward Collision Warning (TTC)
-
-```
-TTC = Distance / Closing_Speed
-Closing_Speed = Ego_Speed - Vehicle_Speed  (only if > 0.5 m/s)
-```
-
-| Alert Level | Trigger Condition | Action |
-|-------------|-------------------|--------|
-| **BRAKE** | TTC < 1.5s **or** distance < 10m | Immediate braking required |
-| **CAUTION** | TTC < 3.0s **or** distance < 20m | Prepare to decelerate |
-| **SAFE** | TTC ≥ 3.0s **and** distance ≥ 20m | Maintain current speed |
-
----
-
-## Performance & Accuracy Metrics
-
-### Vehicle Detection — YOLOv11n
+### Vehicle Detection (YOLOv11n)
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| mAP@50 (COCO) | ~39.5% | Across all 80 COCO classes |
-| mAP@50:95 (COCO) | ~27.3% | Standard COCO metric |
-| Vehicle-specific mAP | ~55–65% | Only 4 filtered classes |
-| Inference Speed (GPU) | ~1.5 ms/frame | At 640px input |
-| Inference Speed (CPU) | ~25–40 ms/frame | At 640px input |
-| Model Size | ~5.8 MB | Nano variant |
+| mAP@50 (COCO val) | 39.5% | All 80 COCO classes |
+| mAP@50:95 (COCO val) | 27.3% | Standard COCO metric |
+| Vehicle-filtered mAP@50 | 55 - 65% | Car, motorcycle, bus, truck only |
+| Model size | 5.8 MB | FP32, nano variant |
+| Parameters | 2.6 M | Smallest YOLO variant |
+| Inference (GPU) | ~1.5 ms / frame | NVIDIA GTX 1060+, 640px input |
+| Inference (CPU) | ~25 - 40 ms / frame | Intel i7 / Apple M1 |
 
 ### Multi-Object Tracking
 
 | Metric | Expected Range | Notes |
 |--------|----------------|-------|
-| MOTA | ~50–65% | IoU-only, no motion model |
-| IDF1 | ~55–70% | Identity preservation score |
-| ID Switches | Moderate | No ReID features |
+| MOTA | 50 - 65% | IoU + Kalman, no appearance model |
+| IDF1 | 55 - 70% | Identity preservation score |
+| ID switches | Moderate | No ReID features; pure motion model |
 
 ### Lane Detection
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Detection Rate | ~70–80% | Well-marked highway lanes |
-| Temporal Stability | High | 8-frame smoothing window |
-| Failure Cases | Curves, faded markings, shadows | Classical CV limitation |
+| Detection rate | 70 - 80% | Well-marked highway lanes |
+| Temporal stability | High | 10-frame smoothing window |
+| Known failure modes | Sharp curves, faded markings, heavy shadows | Classical CV limitation |
 
-### Distance & Speed Estimation
+### End-to-End Pipeline Throughput
 
-| Module | Accuracy | Notes |
-|--------|----------|-------|
-| Distance | ±20–30% | Monocular, uncalibrated focal length |
-| Speed | ±30–50% | Derived from distance; errors compound |
-
-### End-to-End Pipeline
-
-| Config | FPS | Notes |
-|--------|-----|-------|
-| CPU (1280×720) | 5–10 FPS | Apple M1/M2, Intel i7 |
-| GPU (1280×720) | 15–25 FPS | NVIDIA GTX 1060+ |
-| MPS (1280×720) | 10–18 FPS | Apple Silicon (M1/M2) |
-| Latency/frame | < 100 ms | GPU; ~150–200 ms on CPU |
-
-> **Note**: YOLOv11n is the smallest/fastest variant — optimized for speed over accuracy. Upgrade to `yolov11s` (small) or `yolov11m` (medium) for better detection precision at the cost of speed.
+| Configuration | FPS | Per-Frame Latency |
+|---------------|-----|-------------------|
+| C++ + GPU (1280x720) | 20 - 30 | < 50 ms |
+| C++ + CPU (1280x720) | 8 - 15 | 70 - 130 ms |
+| Python + GPU (1280x720) | 15 - 25 | < 80 ms |
+| Python + CPU (1280x720) | 5 - 10 | 100 - 200 ms |
+| Python + MPS (1280x720) | 10 - 18 | 60 - 100 ms |
 
 ---
 
-## Configuration
+## Configuration Reference
 
-### Web UI Settings (Adjustable via slider)
+### Runtime Parameters (Web UI)
 
-| Setting | Default | Range | Description |
-|---------|---------|-------|-------------|
-| YOLO Confidence | 0.40 | 0.10 – 0.95 | Detection sensitivity |
-| Ego Speed | 60 km/h | 0 – 200 | Assumed vehicle speed for TTC |
-| Max Frames | All | 0 – 5000 | 0 = process entire video |
-| Device | CPU | cpu / cuda / mps | Inference hardware |
+| Parameter | Default | Range | Description |
+|-----------|---------|-------|-------------|
+| YOLO Confidence | 0.40 | 0.10 - 0.95 | Detection sensitivity threshold |
+| Ego Speed | 60 km/h | 0 - 200 | Host vehicle speed for TTC computation |
+| Max Frames | All | 0 - 5000 | Frame processing limit (0 = entire video) |
+| Device | CPU | cpu / cuda / mps | Inference hardware backend |
 
-### Pipeline Constants (in source code)
+### Pipeline Constants
 
-| Parameter | File | Value |
-|-----------|------|-------|
-| `TARGET_WIDTH` | preprocessing.py | 1280 px |
-| `TARGET_HEIGHT` | preprocessing.py | 720 px |
-| `FOCAL_LENGTH` | distance.py | 850 px |
-| `SMOOTH_WINDOW` | lane_detection.py | 8 frames |
-| `IOU_THRESHOLD` | tracker.py | 0.30 |
-| `MAX_AGE` | tracker.py | 5 frames |
-| `EMA_ALPHA` | speed.py | 0.4 |
-
----
-
-## Troubleshooting
-
-### YOLO model not loading
-```bash
-pip install ultralytics
-# The model auto-downloads on first use if not found locally
-```
-
-### `ModuleNotFoundError: No module named 'scipy'`
-```bash
-pip install scipy
-```
-
-### `python-multipart` error
-```bash
-pip install python-multipart
-```
-
-### Low FPS
-- Select **CUDA** or **MPS** device in the Web UI
-- Reduce `TARGET_WIDTH`/`TARGET_HEIGHT` in `src/preprocessing.py`
-- Increase YOLO confidence threshold to reduce detections
-- Limit `max_frames` to process fewer frames
-
-### Port already in use
-```bash
-# Kill existing process on port 8000
-lsof -ti:8000 | xargs kill -9
-```
+| Parameter | File | Value | Unit |
+|-----------|------|-------|------|
+| `TARGET_WIDTH` | config.hpp | 1280 | px |
+| `TARGET_HEIGHT` | config.hpp | 720 | px |
+| `FOCAL_LENGTH` | config.hpp | 850.0 | px |
+| `CAMERA_HEIGHT_M` | config.hpp | 1.3 | m |
+| `LANE_SMOOTH_WINDOW` | config.hpp | 10 | frames |
+| `IOU_THRESHOLD` | config.hpp | 0.25 | ratio |
+| `MAX_AGE` | config.hpp | 8 | frames |
+| `SPEED_EMA_ALPHA` | config.hpp | 0.35 | - |
+| `TTC_BRAKE` | config.hpp | 1.5 | s |
+| `TTC_CAUTION` | config.hpp | 3.0 | s |
+| `FCW_HYSTERESIS_FRAMES` | config.hpp | 3 | frames |
 
 ---
 
-## Applications
+## Limitations and Future Work
 
-- Advanced Driver Assistance Systems (ADAS)
-- Autonomous driving perception research
-- Traffic monitoring & analytics
-- Smart transportation systems
-- Driver safety research & education
-- Computer vision portfolio projects
+### Current Limitations
 
+| Area | Limitation | Impact |
+|------|-----------|--------|
+| Distance estimation | Monocular, uncalibrated | +/- 20-30% error at range |
+| Speed estimation | Derived from distance; errors compound | +/- 30-50% accuracy |
+| Lane detection | Classical CV; no learned features | Fails on sharp curves, poor markings |
+| Tracking | No appearance features (ReID) | ID switches during occlusion |
+| Calibration | Assumed intrinsic parameters | System-specific calibration needed |
+
+### Potential Extensions
+
+- **Stereo or LiDAR fusion** for metric-accurate depth estimation.
+- **Deep lane detection** (e.g., LaneATT, CLRNet) replacing Hough Transform for curved and multi-lane roads.
+- **Appearance-based ReID** (e.g., DeepSORT, BoT-SORT) for robust tracking through occlusion.
+- **Sensor fusion** with radar for velocity-independent distance measurement.
+- **Camera calibration pipeline** for per-vehicle intrinsic/extrinsic parameter estimation.
+- **Model optimization** via TensorRT (FP16/INT8 quantization) for embedded deployment.
+- **Multi-camera surround view** extending perception to 360-degree coverage.
+- **Functional safety** (ISO 26262) analysis for ASIL classification of FCW outputs.
+
+---
+
+## References
+
+1. Redmon, J. et al. "You Only Look Once: Unified, Real-Time Object Detection." CVPR 2016.
+2. Jocher, G. et al. "Ultralytics YOLO." https://github.com/ultralytics/ultralytics
+3. Kuhn, H.W. "The Hungarian Method for the Assignment Problem." Naval Research Logistics, 1955.
+4. Kalman, R.E. "A New Approach to Linear Filtering and Prediction Problems." ASME Journal of Basic Engineering, 1960.
+5. ISO 15622:2018. "Intelligent transport systems - Adaptive cruise control systems - Performance requirements and test procedures."
+6. Bradski, G. "The OpenCV Library." Dr. Dobb's Journal of Software Tools, 2000.
+7. Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1986.
+
+---
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
