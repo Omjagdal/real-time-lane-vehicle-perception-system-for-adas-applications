@@ -530,20 +530,6 @@ docker-compose up --build
 - **Multi-camera surround view** extending perception to 360-degree coverage.
 - **Functional safety** (ISO 26262) analysis for ASIL classification of FCW outputs.
 
----
-
-## References
-
-1. Redmon, J. et al. "You Only Look Once: Unified, Real-Time Object Detection." CVPR 2016.
-2. Jocher, G. et al. "Ultralytics YOLO." https://github.com/ultralytics/ultralytics
-3. Kuhn, H.W. "The Hungarian Method for the Assignment Problem." Naval Research Logistics, 1955.
-4. Kalman, R.E. "A New Approach to Linear Filtering and Prediction Problems." ASME Journal of Basic Engineering, 1960.
-5. ISO 15622:2018. "Intelligent transport systems - Adaptive cruise control systems - Performance requirements and test procedures."
-6. Bradski, G. "The OpenCV Library." Dr. Dobb's Journal of Software Tools, 2000.
-7. Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1986.
-
----
-
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
