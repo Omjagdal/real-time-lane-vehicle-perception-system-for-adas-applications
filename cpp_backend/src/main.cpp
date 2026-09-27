@@ -64,7 +64,7 @@ void process_video(std::string job_id, std::string input_path, std::string outpu
 
         // Pipeline components
         lane_detection::LaneDetector lane_detector;
-        vehicle_detection::VehicleDetector detector("../models/yolo11n.onnx", conf);
+        vehicle_detection::VehicleDetector detector("cpp_backend/models/yolo11n.onnx", conf);
         tracker::IoUTracker trk;
         estimators::DistanceEstimator dist_est(config::TARGET_HEIGHT);
         estimators::SpeedEstimator speed_est(fps);

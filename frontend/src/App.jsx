@@ -63,8 +63,11 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-5 text-center text-xs text-gray-600 space-y-1">
-        <p>ADAS Perception System · YOLOv11n · IoU Tracking · FCW</p>
+      <footer
+        className="py-5 text-center text-xs space-y-1"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+      >
+        <p className="text-gray-600">ADAS Perception System · YOLOv11n · IoU Tracking · FCW</p>
         <p className="text-gray-700">Built with React + FastAPI · © 2025 Om Jagdale</p>
       </footer>
     </div>

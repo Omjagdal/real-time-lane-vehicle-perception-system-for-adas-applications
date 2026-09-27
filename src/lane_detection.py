@@ -111,7 +111,10 @@ class LaneDetector:
         right_params = []
 
         for line in raw_lines:
-            x1, y1, x2, y2 = line[0]
+            coords = np.ravel(line)
+            if len(coords) < 4:
+                continue
+            x1, y1, x2, y2 = coords[:4]
             if x2 == x1:
                 continue  # vertical — skip
             slope = (y2 - y1) / (x2 - x1)

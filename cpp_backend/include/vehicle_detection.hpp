@@ -20,7 +20,7 @@ namespace vehicle_detection {
 
     class VehicleDetector {
     public:
-        VehicleDetector(const std::string& model_path = "../models/yolo11n.onnx", 
+        VehicleDetector(const std::string& model_path = "cpp_backend/models/yolo11n.onnx", 
                         float conf_threshold = -1.0, 
                         float nms_threshold = -1.0);
 
