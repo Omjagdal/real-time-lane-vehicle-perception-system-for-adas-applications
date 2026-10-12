@@ -240,7 +240,7 @@ distance = clamp(EMA_smooth(distance), 1.0, 200.0)
 | Bus | 2.5 m |
 | Truck | 2.4 m |
 
-**Calibration assumptions**: Focal length = 850 px (for 1280x720), camera height = 1.3 m, pitch = 2 degrees.
+*Calibration assumptions**: Focal length = 850 px (for 1280x720), camera height = 1.3 m, pitch = 2 degrees.
 
 ### 6. Speed Estimation
 
