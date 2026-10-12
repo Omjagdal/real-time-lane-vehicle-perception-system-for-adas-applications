@@ -361,11 +361,8 @@ cd Real-time-lane-Vehicle-Perception-system-for-ADAS-Applications
 ### 2. C++ Backend (Recommended for Performance)
 
 ```bash
-cd cpp_backend
-mkdir -p build && cd build
-cmake ..
-make -j$(nproc)
-cd ../..
+./cpp_backend/build/adas_server
+
 ```
 
 **Dependencies**: OpenCV 4.8+ with DNN module (`brew install opencv` on macOS, `sudo apt install libopencv-dev` on Ubuntu).
