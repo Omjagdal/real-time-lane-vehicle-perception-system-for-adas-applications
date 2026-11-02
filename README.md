@@ -527,6 +527,3 @@ docker-compose up --build
 - **Multi-camera surround view** extending perception to 360-degree coverage.
 - **Functional safety** (ISO 26262) analysis for ASIL classification of FCW outputs.
 
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
