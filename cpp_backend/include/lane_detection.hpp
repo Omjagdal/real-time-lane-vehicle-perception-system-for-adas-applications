@@ -20,7 +20,7 @@
  *          (e.g., LaneATT, CLRNet).
  *
  * @see     config.hpp for Hough and smoothing parameters.
- * @author  Om Jagdale
+ * 
  */
 
 #pragma once
