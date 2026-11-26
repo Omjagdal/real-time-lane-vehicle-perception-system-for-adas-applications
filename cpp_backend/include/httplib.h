@@ -1,8 +1,7 @@
 //
 //  httplib.h
 //
-//  Copyright (c) 2026 Yuji Hirose. All rights reserved.
-//  MIT License
+//  
 //
 
 #ifndef CPPHTTPLIB_HTTPLIB_H
